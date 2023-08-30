@@ -1,71 +1,72 @@
 ﻿using System.IO;
 using System.Reflection;
 using System.Text;
+using static System.Net.Mime.MediaTypeNames;
 
-AplicativoDecodeInCsharp();
-void AplicativoDecodeInCsharp()
+AppDecodeInCsharp();
+void AppDecodeInCsharp()
 {
-    int opcaoUm;
+    int optionOne;
 
     do
     {
-        Console.WriteLine("Aplicativo de testes Intelitrader - Por Marcelo Vesanterä.");
+        Console.WriteLine("Decode in C# App - By Marcelo Vesanterä.");
         Console.WriteLine("----------------------------------------------------------");
         Console.WriteLine("                                                          ");
 
-        Console.WriteLine("-------------------- Escolha um teste --------------------");
-        Console.WriteLine("1 - Cifra de César");
+        Console.WriteLine("-------------------- Choose on option --------------------");
+        Console.WriteLine("1 - Caesar Cipher");
         Console.WriteLine("2 - Base64");
-        Console.WriteLine("3 - Fechar programa");
+        Console.WriteLine("3 - Close app");
 
-        opcaoUm = Convert.ToInt32(Console.ReadLine());
+        optionOne = Convert.ToInt32(Console.ReadLine());
 
-        switch (opcaoUm)
+        switch (optionOne)
         {
             case 1:
-                AplicativoCifraDeCesar();
+                AppCaesarCipher();
                 break;
             case 2:
-                AplicativoBase64();
+                AppBase64();
                 break;
             case 3:
-                Console.WriteLine("Fechando o programa...");
+                Console.WriteLine("Closing app...");
                 Environment.Exit(0);
                 break;
             default:
-                Console.WriteLine("A opção digitada não existe.");
+                Console.WriteLine("This option does not exists.");
                 break;
         }
 
-        Console.WriteLine("Pressione Enter para reiniciar...");
+        Console.WriteLine("Press Enter to reload...");
         Console.ReadLine();
         Console.Clear();
-    } while (opcaoUm != 3);
+    } while (optionOne != 3);
 }
-void AplicativoCifraDeCesar()
+void AppCaesarCipher()
 {
-    Console.WriteLine("Escolha uma opção para a Cifra de César:");
-    Console.WriteLine("1 - Criptografar");
-    Console.WriteLine("2 - Descriptografar");
+    Console.WriteLine("Choose one option:");
+    Console.WriteLine("1 - Encrypt");
+    Console.WriteLine("2 - Decrypt");
 
-    int opcaoCesar = Convert.ToInt32(Console.ReadLine());
+    int optionCaesar = Convert.ToInt32(Console.ReadLine());
 
-    switch (opcaoCesar)
+    switch (optionCaesar)
     {
         case 1:
             Console.WriteLine("----------------------------------------------");
-            Console.WriteLine("Você escolheu Criptografar com Cifra de César.");
+            Console.WriteLine("You chose Encrypt with Caesar's Cipher.");
 
             try
             {
                 Console.WriteLine("                                          ");
-                Console.Write("Digite o texto a ser criptografado: ");
-                string textoDigitado = Console.ReadLine();
+                Console.Write("Enter the text to be encrypted: ");
+                string inputText = Console.ReadLine();
 
-                string textoCriptografado = CriptografarCifraDeCesar(textoDigitado);
-                string nomeArquivoGerado = GravarArquivo(textoCriptografado, "CifraDeCesar_Criptografado");
+                string encryptedText = EncryptCaesarCipher(inputText);
+                string fileNameCreated = SaveFile(encryptedText, "CesarCipher_Encrypted");
 
-                Console.WriteLine($"Arquivo {nomeArquivoGerado} criado.");
+                Console.WriteLine($"File {fileNameCreated} created.");
                 Console.WriteLine("----------------------------------------------");
             }
             catch (Exception e)
@@ -76,25 +77,25 @@ void AplicativoCifraDeCesar()
             break;
         case 2:
             Console.WriteLine("-------------------------------------------------");
-            Console.WriteLine("Você escolheu Descriptografar com Cifra de César.");
+            Console.WriteLine("You chose Decrypt with Caesar's Cipher.");
 
             try
             {
                 Console.WriteLine("                                              ");
-                Console.Write("Digite o nome do arquivo a ser descriptografado: ");
-                string nomeArquivo = Console.ReadLine();
+                Console.Write("Type the name of the file to be decrypted: ");
+                string fileName = Console.ReadLine();
 
-                string textoDoArquivo = LerArquivo(nomeArquivo);
-                string textoDescriptografado = DescriptografarCifraDeCesar(textoDoArquivo);
+                string fileText = ReadFile(fileName);
+                string decryptedText = DecryptCaesarCipher(fileText);
 
                 Console.WriteLine("----------------------------------------------");
-                Console.WriteLine("Seu texto descriptografado é:");
-                Console.WriteLine(textoDescriptografado);
+                Console.WriteLine("Your decrypted text is:");
+                Console.WriteLine(decryptedText);
                 Console.WriteLine("                                              ");
 
-                string nomeArquivoGerado = GravarArquivo(textoDescriptografado, "CifraDeCesar_Descriptografado");
+                string fileNameCreated = SaveFile(decryptedText, "CesarCipher_Decrypted");
 
-                Console.WriteLine($"Arquivo {nomeArquivoGerado} criado.");
+                Console.WriteLine($"File {fileNameCreated} created.");
                 Console.WriteLine("----------------------------------------------");
             }
             catch (Exception e)
@@ -104,15 +105,15 @@ void AplicativoCifraDeCesar()
 
             break;
         default:
-            Console.WriteLine("A opção digitada não existe.");
+            Console.WriteLine("The option you typed does not exist.");
             break;
     }
 }
-void AplicativoBase64()
+void AppBase64()
 {
-    Console.WriteLine("Escolha uma opção para o Base64:");
-    Console.WriteLine("1 - Codificar");
-    Console.WriteLine("2 - Decodificar");
+    Console.WriteLine("Choose an option for Base64:");
+    Console.WriteLine("1 - Encode");
+    Console.WriteLine("2 - Decode");
 
     int choiceBase64 = Convert.ToInt32(Console.ReadLine());
 
@@ -120,18 +121,18 @@ void AplicativoBase64()
     {
         case 1:
             Console.WriteLine("-----------------------------------");
-            Console.WriteLine("Você escolheu Codificar com Base64.");
+            Console.WriteLine("You chose Encode with Base64.");
 
             try
             {
                 Console.WriteLine("                                          ");
-                Console.Write("Digite o texto a ser codificado: ");
-                string textoDigitado = Console.ReadLine();
+                Console.Write("Enter the text to encode: ");
+                string inputText = Console.ReadLine();
 
-                string textoCodificado = CodificarBase64(textoDigitado);
-                string nomeArquivoGerado = GravarArquivo(textoCodificado, "Base64_Codificado");
+                string encodedText = EncodeBase64(inputText);
+                string fileNameCreated = SaveFile(encodedText, "Base64_Codificado");
 
-                Console.WriteLine($"Arquivo {nomeArquivoGerado} criado.");
+                Console.WriteLine($"File {fileNameCreated} created.");
                 Console.WriteLine("----------------------------------------------");
             }
             catch (Exception e)
@@ -142,25 +143,25 @@ void AplicativoBase64()
             break;
         case 2:
             Console.WriteLine("-------------------------------------");
-            Console.WriteLine("Você escolheu Decodificar com Base64.");
+            Console.WriteLine("You chose Decode with Base64.");
 
             try
             {
                 Console.WriteLine("                                              ");
-                Console.Write("Digite o nome do arquivo a ser decodificado: ");
-                string nomeArquivo = Console.ReadLine();
+                Console.Write("Enter the name of the file to be decoded: ");
+                string fileName = Console.ReadLine();
 
-                string textoDoArquivo = LerArquivo(nomeArquivo);
-                string textoDecodificado = DecodificarBase64(textoDoArquivo);
+                string fileText = ReadFile(fileName);
+                string decodedText = DecodeBase64(fileText);
 
                 Console.WriteLine("----------------------------------------------");
-                Console.WriteLine("Seu texto decodificado é:");
-                Console.WriteLine(textoDecodificado);
+                Console.WriteLine("Its decoded text is: ");
+                Console.WriteLine(decodedText);
                 Console.WriteLine("                                              ");
 
-                string nomeArquivoGerado = GravarArquivo(textoDecodificado, "Base64_Decodificado");
+                string fileNameCreated = SaveFile(decodedText, "Base64_Encoded");
 
-                Console.WriteLine($"Arquivo {nomeArquivoGerado} criado.");
+                Console.WriteLine($"File {fileNameCreated} created.");
                 Console.WriteLine("----------------------------------------------");
             }
             catch (Exception e)
@@ -170,86 +171,86 @@ void AplicativoBase64()
 
             break;
         default:
-            Console.WriteLine("A opção digitada não existe.");
+            Console.WriteLine("The option you typed does not exist.");
             break;
     }
 }
-string GetDiretorioAtual()
+string GetCurrentDirectory()
 {
-    string diretorioAtual = $"{Path.GetDirectoryName(Assembly.GetEntryAssembly().Location)}";
+    string currentDirectory = $"{Path.GetDirectoryName(Assembly.GetEntryAssembly().Location)}";
 
-    return diretorioAtual;
+    return currentDirectory;
 }
-string GravarArquivo(string textoDigitado, string nomeBaseArquivo)
+string SaveFile(string inputText, string fileNameBase)
 {
-    string diretorioAtual = GetDiretorioAtual();
-    string[] arquivos = Directory.GetFiles($"{diretorioAtual}\\");
+    string currentDirectory = GetCurrentDirectory();
+    string[] files = Directory.GetFiles($"{currentDirectory}\\");
 
-    List<string> arquivosFiltradosLista = new List<string>();
-    foreach (var arquivo in arquivos)
+    List<string> filteredFilesList = new List<string>();
+    foreach (var file in files)
     {
-        if ((bool)arquivo.Contains(nomeBaseArquivo))
-            arquivosFiltradosLista.Add(arquivo);
+        if ((bool)file.Contains(fileNameBase))
+            filteredFilesList.Add(file);
     }
 
-    int numeroArquivo = arquivosFiltradosLista.Count() + 1;
-    string nomeDoArquivo = $"{nomeBaseArquivo}_{numeroArquivo}.txt";
-    StreamWriter streamWriter = new StreamWriter($"{diretorioAtual}\\{nomeDoArquivo}");
+    int fileNumber = filteredFilesList.Count() + 1;
+    string fileName = $"{fileNameBase}_{fileNumber}.txt";
+    StreamWriter streamWriter = new StreamWriter($"{currentDirectory}\\{fileName}");
 
-    streamWriter.WriteLine(textoDigitado);
+    streamWriter.WriteLine(inputText);
     streamWriter.Close();
 
-    return nomeDoArquivo;
+    return fileName;
 }
-string LerArquivo(string nomeArquivo)
+string ReadFile(string fileName)
 {
-    string diretorioAtual = GetDiretorioAtual();
-    StreamReader streamReader = new StreamReader($"{diretorioAtual}\\{nomeArquivo}.txt");
+    string currentDirectory = GetCurrentDirectory();
+    StreamReader streamReader = new StreamReader($"{currentDirectory}\\{fileName}.txt");
 
-    string texto = streamReader.ReadToEnd();
+    string text = streamReader.ReadToEnd();
     streamReader.Close();
 
-    return texto;
+    return text;
 }
-string CriptografarCifraDeCesar(string textoDigitado)
+string EncryptCaesarCipher(string inputText)
 {
-    string textoCriptografado = "";
+    string encryptedText = "";
 
-    for (int i = 0; i < textoDigitado.Length; i++)
+    for (int i = 0; i < inputText.Length; i++)
     {
-        int letraNum = (int)textoDigitado[i];
-        int letraNumCriptgrafado = letraNum + 3;
+        int charNum = (int)inputText[i];
+        int encryptedCharNum = charNum + 3;
 
-        textoCriptografado += Char.ConvertFromUtf32(letraNumCriptgrafado);
+        encryptedText += Char.ConvertFromUtf32(encryptedCharNum);
     }
 
-    return textoCriptografado;
+    return encryptedText;
 }
-string DescriptografarCifraDeCesar(string textoDoArquivo)
+string DecryptCaesarCipher(string fileText)
 {
-    string textoDescriptografado = "";
+    string decryptedText = "";
 
-    for (int i = 0; i < textoDoArquivo.Length; i++)
+    for (int i = 0; i < fileText.Length; i++)
     {
-        int letraNum = (int)textoDoArquivo[i];
-        int letraNumCriptgrafado = letraNum - 3;
+        int charNum = (int)fileText[i];
+        int decryptedCharNum = charNum - 3;
 
-        textoDescriptografado += Char.ConvertFromUtf32(letraNumCriptgrafado);
+        decryptedText += Char.ConvertFromUtf32(decryptedCharNum);
     }
 
-    return textoDescriptografado;
+    return decryptedText;
 }
-string CodificarBase64(string textoDigitado)
+string EncodeBase64(string inputText)
 {
-    byte[] textoEmBytes = Encoding.ASCII.GetBytes(textoDigitado);
-    string textoCodificado = System.Convert.ToBase64String(textoEmBytes);
+    byte[] textInBytes = Encoding.ASCII.GetBytes(inputText);
+    string decodedText = System.Convert.ToBase64String(textInBytes);
 
-    return textoCodificado;
+    return decodedText;
 }
-string DecodificarBase64(string textoDoArquivo)
+string DecodeBase64(string fileText)
 {
-    byte[] dadosEmBytes = System.Convert.FromBase64String(textoDoArquivo);
-    string textoDecodificado = System.Text.ASCIIEncoding.ASCII.GetString(dadosEmBytes);
+    byte[] dataInBytes = System.Convert.FromBase64String(fileText);
+    string decodedText = System.Text.ASCIIEncoding.ASCII.GetString(dataInBytes);
 
-    return textoDecodificado;
+    return decodedText;
 }
